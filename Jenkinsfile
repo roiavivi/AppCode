@@ -32,7 +32,7 @@ pipeline {
         expression { return params.TRIGGER_APP_CD }
       }
       steps {
-        build job: 'app-cd', 
+        build job: 'App-CD', 
               parameters: [
                 string(name: 'BUILD_NUMBER', value: "${BUILD_NUMBER}")
               ],
