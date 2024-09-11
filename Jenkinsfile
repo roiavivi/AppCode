@@ -27,7 +27,7 @@ pipeline {
       }
     }
 
-    stage('Trigger app-cd job') {
+    stage('Trigger App-CD job') {
       when {
         expression { return params.TRIGGER_APP_CD }
       }
