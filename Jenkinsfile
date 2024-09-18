@@ -7,7 +7,7 @@ pipeline {
   }
 
   parameters {
-    booleanParam(name: 'TRIGGER_APP_CD', defaultValue: false, description: 'Trigger app-cd job')
+    booleanParam(name: 'TRIGGER_CD_DSL', defaultValue: false, description: 'Trigger cd-dsl job')
   }
 
   stages {
@@ -27,12 +27,12 @@ pipeline {
       }
     }
 
-    stage('Trigger App-CD job') {
+    stage('Trigger CD-DSL job') {
       when {
-        expression { return params.TRIGGER_APP_CD }
+        expression { return params.TRIGGER_CD_DSL }
       }
       steps {
-        build job: 'App-CD', 
+        build job: 'CD-DSL', 
               parameters: [
                 string(name: 'BUILD_NUMBER', value: "${BUILD_NUMBER}")
               ],
