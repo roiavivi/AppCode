@@ -10,10 +10,24 @@ pipeline {
     booleanParam(name: 'TRIGGER_CD_DSL', defaultValue: false, description: 'Trigger cd-dsl job')
   }
 
+  environment {
+    SONARQUBE_SCANNER_HOME = '/opt/sonar-scanner' // Path to the SonarQube Scanner installation
+    SONAR_HOST_URL = 'https://sonarqube.roiavivi.com'
+    SONAR_PROJECT_KEY = 'app'
+    // Add your SonarQube token as a secret text credential in Jenkins and reference it here
+    SONAR_AUTH_TOKEN = credentials('sonar-auth-token') // Replace 'sonar-auth-token' with your actual credential ID
+  }
+
   stages {
-    stage('Test image') {
+    stage('SonarQube Analysis') {
       steps {
-        sh 'ls -l'
+        sh '''
+          ${SONARQUBE_SCANNER_HOME}/bin/sonar-scanner \
+            -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=${SONAR_HOST_URL} \
+            -Dsonar.login=${SONAR_AUTH_TOKEN}
+        '''
       }
     }
 
