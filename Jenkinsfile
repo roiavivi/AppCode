@@ -11,7 +11,6 @@ pipeline {
   }
 
   environment {
-    SONARQUBE_SCANNER_HOME = '/opt/sonar-scanner' // Path to the SonarQube Scanner installation
     SONAR_HOST_URL = 'https://sonarqube.roiavivi.com'
     SONAR_PROJECT_KEY = 'app'
     // Add your SonarQube token as a secret text credential in Jenkins and reference it here
@@ -21,13 +20,15 @@ pipeline {
   stages {
     stage('SonarQube Analysis') {
       steps {
-        sh '''
-          ${SONARQUBE_SCANNER_HOME}/bin/sonar-scanner \
-            -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-            -Dsonar.sources=. \
-            -Dsonar.host.url=${SONAR_HOST_URL} \
-            -Dsonar.login=${SONAR_AUTH_TOKEN}
-        '''
+        container('sonar-scanner') {
+          sh '''
+            sonar-scanner \
+              -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+              -Dsonar.sources=. \
+              -Dsonar.host.url=${SONAR_HOST_URL} \
+              -Dsonar.login=${SONAR_AUTH_TOKEN}
+          '''
+        }
       }
     }
 
