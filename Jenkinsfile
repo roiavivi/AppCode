@@ -18,44 +18,44 @@ pipeline {
     AWS_ECR_REPO_NAME = 'your-ecr-repo-name' // Replace with your actual ECR repository name
   }
 
-  // stages {
-  //   stage('SonarQube Analysis') {
-  //     steps {
-  //       container('sonar-scanner') {
-  //         sh '''
-  //           sonar-scanner \
-  //             -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-  //             -Dsonar.sources=. \
-  //             -Dsonar.host.url=${SONAR_HOST_URL} \
-  //             -Dsonar.login=${SONAR_AUTH_TOKEN}
-  //         '''
-  //       }
-  //     }
-  //   }
+  stages {
+    // stage('SonarQube Analysis') {
+    //   steps {
+    //     container('sonar-scanner') {
+    //       sh '''
+    //         sonar-scanner \
+    //           -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+    //           -Dsonar.sources=. \
+    //           -Dsonar.host.url=${SONAR_HOST_URL} \
+    //           -Dsonar.login=${SONAR_AUTH_TOKEN}
+    //       '''
+    //     }
+    //   }
+    // }
 
-  //   stage('Quality Check') {
-  //     steps {
-  //       container('sonar-scanner') {
-  //         script {
-  //           def projectStatus = sh(
-  //             script: '''
-  //               status=$(curl -s -u ${SONAR_AUTH_TOKEN}: ${SONAR_HOST_URL}/api/qualitygates/project_status?projectKey=${SONAR_PROJECT_KEY} | jq -r '.projectStatus.status')
-  //               if [ "$status" != "OK" ]; then
-  //                 echo "Quality gate failed: $status"
-  //                 exit 1
-  //               else
-  //                 echo "Quality gate passed: $status"
-  //               fi
-  //             ''',
-  //             returnStatus: true
-  //           )
-  //           if (projectStatus != 0) {
-  //             error "Quality gate failed"
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
+    // stage('Quality Check') {
+    //   steps {
+    //     container('sonar-scanner') {
+    //       script {
+    //         def projectStatus = sh(
+    //           script: '''
+    //             status=$(curl -s -u ${SONAR_AUTH_TOKEN}: ${SONAR_HOST_URL}/api/qualitygates/project_status?projectKey=${SONAR_PROJECT_KEY} | jq -r '.projectStatus.status')
+    //             if [ "$status" != "OK" ]; then
+    //               echo "Quality gate failed: $status"
+    //               exit 1
+    //             else
+    //               echo "Quality gate passed: $status"
+    //             fi
+    //           ''',
+    //           returnStatus: true
+    //         )
+    //         if (projectStatus != 0) {
+    //           error "Quality gate failed"
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
 
     stage('Trivy File Scan') {
       steps {
