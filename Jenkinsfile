@@ -35,6 +35,9 @@ pipeline {
     stage('Quality Check') {
       steps {
         container('sonar-scanner') {
+          sh '''
+            apk add --no-cache curl jq
+          '''
           script {
             def projectStatus = sh(
               script: '''
