@@ -19,19 +19,19 @@ pipeline {
   }
 
   stages {
-    // stage('SonarQube Analysis') {
-    //   steps {
-    //     container('sonar-scanner') {
-    //       sh '''
-    //         sonar-scanner \
-    //           -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-    //           -Dsonar.sources=. \
-    //           -Dsonar.host.url=${SONAR_HOST_URL} \
-    //           -Dsonar.login=${SONAR_AUTH_TOKEN}
-    //       '''
-    //     }
-    //   }
-    // }
+    stage('SonarQube Analysis') {
+      steps {
+        container('sonar-scanner') {
+          sh '''
+            sonar-scanner \
+              -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+              -Dsonar.sources=. \
+              -Dsonar.host.url=${SONAR_HOST_URL} \
+              -Dsonar.login=${SONAR_AUTH_TOKEN}
+          '''
+        }
+      }
+    }
 
     // stage('Quality Check') {
     //   steps {
