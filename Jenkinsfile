@@ -58,7 +58,15 @@ pipeline {
     //     }
     //   }
     // }
-
+    
+    stage('Trivy File Scan') {
+      steps {
+        container('trivy') {
+          sh 'trivy fs . > trivyfs.txt'
+        }
+      }
+    }
+    
     stage('Build with Kaniko') {
       steps {
         container(name: 'kaniko', shell: '/busybox/sh') {
