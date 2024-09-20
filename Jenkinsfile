@@ -37,7 +37,7 @@ pipeline {
         container('sonar-scanner') {
           script {
             def projectStatus = sh(
-              script: """
+              script: '''
                 status=$(curl -s -u ${SONAR_AUTH_TOKEN}: ${SONAR_HOST_URL}/api/qualitygates/project_status?projectKey=${SONAR_PROJECT_KEY} | jq -r '.projectStatus.status')
                 if [ "$status" != "OK" ]; then
                   echo "Quality gate failed: $status"
@@ -45,7 +45,7 @@ pipeline {
                 else
                   echo "Quality gate passed: $status"
                 fi
-              """,
+              ''',
               returnStatus: true
             )
             if (projectStatus != 0) {
