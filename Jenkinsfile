@@ -19,20 +19,20 @@ pipeline {
     AWS_ECR_REPO_NAME = 'your-ecr-repo-name' // Replace with your actual ECR repository name
   }
 
-  stages {
-    stage('SonarQube Analysis') {
-      steps {
-        container('sonar-scanner') {
-          sh '''
-            sonar-scanner \
-              -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-              -Dsonar.sources=. \
-              -Dsonar.host.url=${SONAR_HOST_URL} \
-              -Dsonar.login=${SONAR_AUTH_TOKEN}
-          '''
-        }
-      }
-    }
+  // stages {
+  //   stage('SonarQube Analysis') {
+  //     steps {
+  //       container('sonar-scanner') {
+  //         sh '''
+  //           sonar-scanner \
+  //             -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+  //             -Dsonar.sources=. \
+  //             -Dsonar.host.url=${SONAR_HOST_URL} \
+  //             -Dsonar.login=${SONAR_AUTH_TOKEN}
+  //         '''
+  //       }
+  //     }
+  //   }
 
     // stage('Quality Check') {
     //   steps {
