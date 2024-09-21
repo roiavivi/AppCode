@@ -68,7 +68,9 @@ pipeline {
       steps {
         container(name: 'builder', shell: '/busybox/sh') {
           sh '''#!/busybox/sh
+            echo "Starting Kaniko build..."
             /kaniko/executor --context `pwd` --dockerfile `pwd`/Dockerfile --destination roie710/app:${BUILD_NUMBER}
+            echo "Kaniko build completed."
           '''
         }
       }
