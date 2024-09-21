@@ -12,15 +12,16 @@ pipeline {
   environment {
     SONAR_HOST_URL = 'https://sonarqube.roiavivi.com'
     SONAR_PROJECT_KEY = 'app'
-    SONAR_AUTH_TOKEN = credentials('sonar-auth-token')
-    REPOSITORY_URI = 'your-repository-uri/'
-    AWS_ECR_REPO_NAME = 'your-ecr-repo-name'
+    // Add your SonarQube token as a secret text credential in Jenkins and reference it here
+    SONAR_AUTH_TOKEN = credentials('sonar-auth-token') // Replace 'sonar-auth-token' with your actual credential ID
+    REPOSITORY_URI = 'your-repository-uri/' // Replace with your actual repository URI
+    AWS_ECR_REPO_NAME = 'your-ecr-repo-name' // Replace with your actual ECR repository name
   }
 
   stages {
     stage('SonarQube Analysis') {
       steps {
-        container('builder') {
+        container('sonar-scanner') {
           sh '''
             sonar-scanner \
               -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
@@ -34,7 +35,7 @@ pipeline {
 
     // stage('Quality Check') {
     //   steps {
-    //     container('builder') {
+    //     container('sonar-scanner') {
     //       script {
     //         def projectStatus = sh(
     //           script: '''
@@ -58,7 +59,7 @@ pipeline {
 
     stage('Trivy File Scan') {
       steps {
-        container('builder') {
+        container('trivy') {
           sh 'trivy fs . > trivyfs.txt'
         }
       }
@@ -66,12 +67,9 @@ pipeline {
 
     stage('Build with Kaniko') {
       steps {
-        container('builder') {
+        container(name: 'kaniko', shell: '/busybox/sh') {
           sh '''#!/busybox/sh
-            echo "Starting Kaniko build..."
-            ls -la /kaniko
             /kaniko/executor --context `pwd` --dockerfile `pwd`/Dockerfile --destination roie710/app:${BUILD_NUMBER}
-            echo "Kaniko build completed."
           '''
         }
       }
@@ -79,7 +77,7 @@ pipeline {
 
     stage('TRIVY Image Scan') {
       steps {
-        container('builder') {
+        container('trivy') {
           sh 'trivy image roie710/app:${BUILD_NUMBER} > trivyimage.txt'
         }
       }
