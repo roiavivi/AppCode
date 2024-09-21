@@ -66,7 +66,7 @@ pipeline {
 
     stage('Build with Kaniko') {
       steps {
-        container(name: 'builder', shell: '/busybox/sh') {
+        container('builder') {
           sh '''#!/busybox/sh
             echo "Starting Kaniko build..."
             ls -la /kaniko
