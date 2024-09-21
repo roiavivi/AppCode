@@ -21,7 +21,7 @@ pipeline {
   stages {
     stage('SonarQube Analysis') {
       steps {
-        container('sonar-scanner') {
+        container('kaniko') {
           sh '''
             sonar-scanner \
               -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
@@ -59,7 +59,7 @@ pipeline {
 
     stage('Trivy File Scan') {
       steps {
-        container('trivy') {
+        container('kaniko') {
           sh 'trivy fs . > trivyfs.txt'
         }
       }
@@ -77,7 +77,7 @@ pipeline {
 
     stage('TRIVY Image Scan') {
       steps {
-        container('trivy') {
+        container('kaniko') {
           sh 'trivy image roie710/app:${BUILD_NUMBER} > trivyimage.txt'
         }
       }
