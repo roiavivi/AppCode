@@ -5,7 +5,7 @@ metadata:
 spec:
   containers:
   - name: builder
-    image: roie710/builder-image:24
+    image: roie710/builder-image:25
     command: ["sleep"]
     args: ["9999999"]
     resources:
