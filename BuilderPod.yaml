@@ -10,10 +10,10 @@ spec:
     - 9999999
     resources:
       limits:
-        memory: "2Gi"
+        memory: "3Gi"
         cpu: "1"
       requests:
-        memory: "1Gi"
+        memory: "2Gi"
         cpu: "500m"
 
   - name: kaniko
@@ -25,10 +25,10 @@ spec:
     - 9999999
     resources:
       limits:
-        memory: "2Gi"
+        memory: "3Gi"
         cpu: "1"
       requests:
-        memory: "1Gi"
+        memory: "2Gi"
         cpu: "500m"
     volumeMounts:
       - name: jenkins-docker-cfg
@@ -42,10 +42,10 @@ spec:
     - 9999999
     resources:
       limits:
-        memory: "2Gi"
+        memory: "3Gi"
         cpu: "1"
       requests:
-        memory: "1Gi"
+        memory: "2Gi"
         cpu: "500m"
 
   volumes:
