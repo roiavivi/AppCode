@@ -7,14 +7,14 @@ spec:
     command:
     - sleep
     args:
-    - 9999999
+    - "9999999"
     resources:
       limits:
-        memory: "3Gi"
-        cpu: "1"
-      requests:
         memory: "2Gi"
         cpu: "500m"
+      requests:
+        memory: "1Gi"
+        cpu: "250m"
 
   - name: kaniko
     image: gcr.io/kaniko-project/executor:debug
@@ -22,14 +22,14 @@ spec:
     command:
     - sleep
     args:
-    - 9999999
+    - "9999999"
     resources:
       limits:
-        memory: "3Gi"
-        cpu: "1"
-      requests:
         memory: "2Gi"
         cpu: "500m"
+      requests:
+        memory: "1Gi"
+        cpu: "250m"
     volumeMounts:
       - name: jenkins-docker-cfg
         mountPath: /kaniko/.docker
@@ -39,14 +39,14 @@ spec:
     command:
     - sleep
     args:
-    - 9999999
+    - "9999999"
     resources:
       limits:
-        memory: "3Gi"
-        cpu: "1"
-      requests:
         memory: "2Gi"
         cpu: "500m"
+      requests:
+        memory: "1Gi"
+        cpu: "250m"
 
   volumes:
   - name: jenkins-docker-cfg
