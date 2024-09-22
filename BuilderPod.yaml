@@ -35,7 +35,8 @@ spec:
         mountPath: /kaniko/.docker
 
   - name: sonar-scanner
-    image: sonarsource/sonar-scanner-cli:latest
+    #image: sonarsource/sonar-scanner-cli:latest
+    image: roie710/sonar-scanner:29
     command:
     - sleep
     args:
