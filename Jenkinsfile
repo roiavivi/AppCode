@@ -33,29 +33,29 @@ pipeline {
       }
     }
 
-    // stage('Quality Check') {
-    //   steps {
-    //     container('sonar-scanner') {
-    //       script {
-    //         def projectStatus = sh(
-    //           script: '''
-    //             status=$(curl -s -u ${SONAR_AUTH_TOKEN}: ${SONAR_HOST_URL}/api/qualitygates/project_status?projectKey=${SONAR_PROJECT_KEY} | jq -r '.projectStatus.status')
-    //             if [ "$status" != "OK" ]; then
-    //               echo "Quality gate failed: $status"
-    //               exit 1
-    //             else
-    //               echo "Quality gate passed: $status"
-    //             fi
-    //           ''',
-    //           returnStatus: true
-    //         )
-    //         if (projectStatus != 0) {
-    //           error "Quality gate failed"
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
+    stage('Quality Check') {
+      steps {
+        container('sonar-scanner') {
+          script {
+            def projectStatus = sh(
+              script: '''
+                status=$(curl -s -u ${SONAR_AUTH_TOKEN}: ${SONAR_HOST_URL}/api/qualitygates/project_status?projectKey=${SONAR_PROJECT_KEY} | jq -r '.projectStatus.status')
+                if [ "$status" != "OK" ]; then
+                  echo "Quality gate failed: $status"
+                  exit 1
+                else
+                  echo "Quality gate passed: $status"
+                fi
+              ''',
+              returnStatus: true
+            )
+            if (projectStatus != 0) {
+              error "Quality gate failed"
+            }
+          }
+        }
+      }
+    }
 
     stage('Trivy File Scan') {
       steps {
